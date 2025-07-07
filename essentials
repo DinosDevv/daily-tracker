@@ -1,0 +1,6 @@
+AFTER CLONING:
+1) Add 'data' folder
+2) Create virtual Environment ($python -m venv venv) ($.\venv\Scripts\activate)
+3) Install flask ($pip install flask/$pip3 install flask)
+4) Run with $py app.py in your terminal
+5) Copy Localhost and paste in browser
