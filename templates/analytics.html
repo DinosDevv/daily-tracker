@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Analytics - My Assistant</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ url_for('static', filename='analytics.css') }}">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Analytics - My Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='analytics.css') }}">
+  </head>
+  <body>
+  
   <div class="analytics-container">
     <h1>📊 Analytics Overview</h1>
     
@@ -26,13 +27,71 @@
     </div>
 
     <div class="chart-placeholder">
-      <p>📈 Graph will appear here (e.g. Score over time)</p>
+        <canvas id='myChart'></canvas>
     </div>
 
     <div class="back-link">
       <a href="/">← Back to Home</a>
     </div>
   </div>
-  <script src="static/scripts/analytics.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    
+    function create_chart(data) {
+      const ctx = document.getElementById('myChart'); 
+
+      let score_list = []
+      let date_list = []
+
+      for(i=0; i<data.length; i++) {
+        score_list.push(parseFloat(data[i].score))
+        date_list.push(data[i].date)
+      }
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: date_list,
+          datasets: [{
+            label: 'Score',
+            data: score_list,
+            borderColor: '#00d9ff',
+            backgroundColor: 'rgba(0, 217, 255, 0.2)',
+            tension: 0.3,
+            pointBackgroundColor: '#fff',
+            pointRadius: 4,
+            fill: true
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    function read_json() {
+      fetch('/api/records')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("HTTP error " + response.status);
+          }
+          return response.json();
+        })
+        .then(data => {
+          create_chart(data)
+        })
+        .catch(err => {
+          console.error("Error fetching JSON:", err);
+        });
+    }
+    window.onload = function() {
+      read_json()
+    };
+
+  </script>
 </body>
 </html>

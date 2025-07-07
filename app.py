@@ -1,23 +1,48 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 from fileutils import *
 from datetime import date
 
 app = Flask(__name__)
 
+@app.route('/api/records')
+def api_records():
+    data = load_json('data/records.json')
+    return jsonify(data)
+
 def calculate_score(drinked: bool, smoked: int, exercised: bool, calories: int) -> float:
-    drink_score = 0
-    exercise_score = 0
+    # Normalize input values
+    max_cals = 4000  # τυπικό upper limit
+    max_smokes = 40  # υποθέτουμε το πολύ 40
+    min_cals = 1000
+    min_smokes = 1
 
-    if drinked:
-        drink_score=0
-    else:
-        drink_score=1
-    if exercised:
-        exercise_score=1
-    else:
-        exercise_score=0
+    # Προστασία από μηδενικά
+    smoked = max(smoked, min_smokes)
+    calories = max(calories, min_cals)
 
-    return round(((drink_score*50)+(exercise_score*50) + (calories/100))/(smoked*0.1), 2)
+    # Υπολογισμός υπο-βαθμών (όλοι στο range 0–1)
+    drink_score = 1.0 if not drinked else 0.0
+    exercise_score = 1.0 if exercised else 0.0
+    calorie_score = 1.0 - (calories - min_cals) / (max_cals - min_cals)
+    nicotine_penalty = 1.0 - (smoked - min_smokes) / (max_smokes - min_smokes)
+
+    # Βάρη (προσαρμόσιμα)
+    weights = {
+        "drink": 0.25,
+        "exercise": 0.25,
+        "calories": 0.25,
+        "nicotine": 0.25
+    }
+
+    final_score = (
+        drink_score * weights["drink"] +
+        exercise_score * weights["exercise"] +
+        calorie_score * weights["calories"] +
+        nicotine_penalty * weights["nicotine"]
+    ) * 100
+
+    return round(final_score, 2)
+
 
 @app.route("/")
 def home():
@@ -29,9 +54,15 @@ def record_form():
 
 def calculate_avg_score(data: list) -> str:
     total_score = 0
+    avg_score = 0
     for entry in data:
         total_score += float(entry['score'])
-    return str(round(total_score/len(data), 2))
+    avg_score = round(total_score/(len(data)+1), 2) 
+
+    if avg_score != 1:
+        return str(avg_score)
+    else: 
+        return '0'
 
 def calculate_most_active(data: list) -> str:
     return '7/7/2025' #...
