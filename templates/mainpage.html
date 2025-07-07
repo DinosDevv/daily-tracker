@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Assistant App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+</head>
+<body>
+  <div class="landing-container">
+    <h1 id="header"></h1>
+    <p>Track your habits, improve your health, and stay consistent — one day at a time.</p>
+    <p id="quote">QUOTE PLACEHOLDER</p>
+
+    <div class="cta-buttons">
+      <a href="/record-submition-form" class="btn">Get Started</a>
+      <a href="/analytics" class="btn secondary">📊 View Analytics</a>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <h3>📊 Daily Tracking</h3>
+        <p>Log your smoking, drinking, exercise, and calories — fast and easy.</p>
+      </div>
+      <div class="feature">
+        <h3>📈 Smart Scoring</h3>
+        <p>See your performance trend and get motivated every day.</p>
+      </div>
+      <div class="feature">
+        <h3>🔒 Local & Private</h3>
+        <p>Your data stays on your machine. No accounts. No cloud.</p>
+      </div>
+    </div>
+  </div>
+  <script src="static/scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Records</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='records.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Daily Records</h1>
+    <a href="/record-submition-form" class="link-button">Submit Another Record!</a>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Drinked</th>
+          <th>Smoked</th>
+          <th>Exercised</th>
+          <th>Calories</th>
+          <th>Weight</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in records %}
+        <tr>
+          <td>{{ record.date }}</td>
+          <td>{{ "✅" if record.drinked else "❌" }}</td>
+          <td>{{ record.smoked or "–" }}</td>
+          <td>{{ "✅" if record.exercised else "❌" }}</td>
+          <td>{{ record.calories or "–" }}</td>
+          <td>{{ record.weight or "0.0" }}</td>
+          <td>{{ record.score or "0.0" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <form action="/clear" method="POST" onsubmit="return confirm('Are you sure you want to clear all records?');">
+      <button type="submit" class="clear-btn">🗑️ Clear All</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Assistant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <form method="POST" action="/submit-record" class="record-form">
+      <h1>Submit Daily Record</h1>
+
+      <div class="form-group">
+        <label for="drink-checkbox">Drinked:</label>
+        <input type="checkbox" id="drink-checkbox" name="drink" />
+      </div>
+
+      <div class="form-group">
+        <label for="nicotine-amount">Smoked:</label>
+        <input type="text" id="nicotine-amount" name="nicotine" placeholder="Amount" />
+      </div>
+
+      <div class="form-group">
+        <label for="exercise-checkbox">Exercised:</label>
+        <input type="checkbox" id="exercise-checkbox" name="exercise" />
+      </div>
+
+      <div class="form-group">
+        <label for="calorie-intake">Calories Consumed:</label>
+        <input type="text" id="calorie-intake" name="calories" placeholder="Amount" />
+      </div>
+
+      <div class="form-group">
+        <label for="weight">Weight:</label>
+        <input type="text" id="weight" name="weight" placeholder="Weight" />
+      </div>
+      <button type="submit">Save Record</button>
+    </form>
+  </div>
+</body>
+</html>

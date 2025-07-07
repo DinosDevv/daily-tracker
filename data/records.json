@@ -1,0 +1,20 @@
+[
+  {
+    "date": "2025-07-07",
+    "drinked": false,
+    "smoked": 12,
+    "exercised": false,
+    "calories": 2200,
+    "weight": 65.0,
+    "score": 60.0
+  },
+  {
+    "date": "2025-07-07",
+    "drinked": false,
+    "smoked": 14,
+    "exercised": false,
+    "calories": 2200,
+    "weight": 65.0,
+    "score": 51.43
+  }
+]

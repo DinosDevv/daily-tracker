@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Analytics - My Assistant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='analytics.css') }}">
+</head>
+<body>
+  <div class="analytics-container">
+    <h1>📊 Analytics Overview</h1>
+    
+    <div class="stat-grid">
+      <div class="stat-card">
+        <h3>Average Score</h3>
+        <p>{{ analytics_info.avg_score or "--" }}</p>
+      </div>
+      <div class="stat-card">
+        <h3>Most Active Day</h3>
+        <p>{{ analytics_info.most_active or "--" }}</p>
+      </div>
+      <div class="stat-card">
+        <h3>Total Records</h3>
+        <p>{{ analytics_info.total_records or "--" }}</p>
+      </div>
+    </div>
+
+    <div class="chart-placeholder">
+      <p>📈 Graph will appear here (e.g. Score over time)</p>
+    </div>
+
+    <div class="back-link">
+      <a href="/">← Back to Home</a>
+    </div>
+  </div>
+  <script src="static/scripts/analytics.js"></script>
+</body>
+</html>
